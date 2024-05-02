@@ -21,23 +21,24 @@ void count_size(char *file, t_game_map *my_map)
 
 // int wall = -1;
 
-void flood_fill(int pos_x, int pos_y, int target, t_game_map *my_map)
+int flood_fill(int pos_x, int pos_y, int target, t_game_map *my_map)
 {
+	int res = 0;
   
    if(my_map->map_data[pos_x][pos_y] == '1') // if there is no wall or if i haven't been there
-      return;                                              // already go back
+      return 0;                                              // already go back
    
-   if(my_map->map_data[pos_x][pos_y] != target) // if it's not color go back
-      return;
+   if(my_map->map_data[pos_x][pos_y] == target) // if it's not color go back
+      return 1;
    
    my_map->map_data[pos_x][pos_y] = '1'; // mark the point so that I know if I passed through it. 
    
-   flood_fill(pos_x + 1, pos_y, target, my_map);  // then i can either go south
-   flood_fill(pos_x - 1, pos_y, target, my_map);  // or north
-   flood_fill(pos_x, pos_y + 1, target, my_map);  // or east
-   flood_fill(pos_x, pos_y - 1, target, my_map);  // or west
+   res += flood_fill(pos_x + 1, pos_y, target, my_map);  // then i can either go south
+   res +=flood_fill(pos_x - 1, pos_y, target, my_map);  // or north
+   res +=flood_fill(pos_x, pos_y + 1, target, my_map);  // or east
+   res +=flood_fill(pos_x, pos_y - 1, target, my_map);  // or west
    
-   return;
+   return res;
 
 }
 
