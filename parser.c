@@ -92,11 +92,17 @@ void get_data(char *file, t_game_map *my_map)
 	close(fd);
 }
 
-void parse_map(char *file, t_game_map *my_map)
+int parse_map(char *file, t_game_map *my_map)
 {
 	count_size(file, my_map);
 	get_data(file, my_map);
+	if(!check_items(my_map))
+	{
+      write(2, "Error!\n", 7);   
+      return (0);            
+   	}
 	flood_fill(my_map->player_position[0], my_map->player_position[1], 'E', my_map);
+	return 1;
 }
 
 
@@ -104,7 +110,8 @@ void parse_map(char *file, t_game_map *my_map)
 int main()
 {
 	t_game_map map;
-	valid_map("/Users/asmolnya/Projects/so_long/map2.ber", &map);
-	parse_map("/Users/asmolnya/Projects/so_long/map2.ber", &map);
+	first_check("map3.ber");
+	// valid_map("map2.ber", &map); // if this is wrong, don´t continue
+	parse_map("map3.ber", &map);
 	return 1;
 }

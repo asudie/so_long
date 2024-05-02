@@ -57,37 +57,45 @@ int check_str(int fd)
 	return (1);
 }
 
-int check_items(int fd, t_game_map *map)
+int check_items(t_game_map *my_map)
 {
-	char *str;
+	// char *str;
 	int c;
-	int p;
-	int e;
+	int pe;
 	int i;
+	int j;
 	
-	str = get_next_line(fd);
+	// str = get_next_line(fd);
 	i = 0;
+	j = 0;
 	c = 0;
-	p = 0;
-	e = 0;
-	while(str != NULL)
+	pe = 0;
+	while(my_map->map_data[i][j] != '\0')
 	{
-		while(str[i] != '\n' && str[i] != '\0')
+		while(my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '\0')
 		{
-			if(str[i] == 'E')
-				e++;
-			else if(str[i] == 'P')
-				p++;
-			else if(str[i] == 'C')
+			if(my_map->map_data[i][j] == 'E')
+				pe++;
+			else if(my_map->map_data[i][j] == 'P')
+			{
+				my_map->player_position[0] = i;
+				my_map->player_position[1] = j;
+				pe++;
+			}
+				
+			else if(my_map->map_data[i][j] == 'C')
 				c++;
+			j++;
+		}
+		if(my_map->map_data[i][j] != '\0')
+		{
+			j = 0;
 			i++;
 		}
-		str = get_next_line(fd);
-		i = 0;
 	}
-	if(e == 1 && p == 1 && c >= 1)
+	if(pe == 2 && c >= 1)
 	{
-		map->max_score = c;
+		my_map->max_score = c;
 		return (1);
 	}	
 	return (0);
@@ -95,15 +103,30 @@ int check_items(int fd, t_game_map *map)
 
 int check_ber(char *str)
 {
-	int i;
-
-	i = 0;
 	if(ft_strncmp((str + ft_strlen(str) - 4), ".ber", 4))
 		return 0;
 	return 1;
 }
 
-int valid_map(char *str, t_game_map *map)
+int first_check(char *str)
+{
+	int fd;
+	fd = open(str, O_RDONLY);
+	if(fd == -1)
+   {
+      write(2, "Error!\n", 7);   
+      return (0);            
+   }
+	if(!check_ber(str) || !check_str(fd))
+	{
+      write(2, "Error!\n", 7);   
+      return (0);            
+	}
+	close(fd);
+	return 1;
+}
+
+/* int valid_map(char *str, t_game_map *map)
 {
 	int fd;
 	fd = open(str, O_RDONLY);
@@ -126,7 +149,7 @@ int valid_map(char *str, t_game_map *map)
 	}
 	close(fd);
 	return 1;
-}
+} */
 
 // int main()
 // {
