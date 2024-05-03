@@ -42,32 +42,24 @@ int flood_fill(int pos_x, int pos_y, int target, t_game_map *my_map)
 
 }
 
-// int check_paths(t_game_map *my_map)
-// {
-// 	int cltb;
-// 	int exit_count;
-// 	char **data;
-// 	int x;
-// 	int y;
+ int check_paths(int pos_x, int pos_y, t_game_map *my_map)
+ {
+	int collectables;
 
-// 	cltb = 0;
-// 	exit_count = 0;
-// 	data = my_map->map_data;
-// 	x = 0;
-// 	y = 0;
-// 	if (cltb == my_map->max_score && exit_count == 1)
-// 		return 1;
-// 	if (on_wall)
-// 		return 0;
-// 	if (on_collectable)
-// 		collectables++;
-// 	if (on_exit)
-// 		exits++;
-// 	replace_current_position_with_wall;
-// 	if (one_of_the_four_adjacent_directions_is_possible)
-// 		return 1;
-// 	return 0;
-// }
+	collectables = 0;
+ 	if (collectables == my_map->max_score && exit_count == 1)
+		return 1;
+	if (my_map->map_data[pos_x][pos_y] == '1')
+		return 0;
+	if (my_map->map_data[pos_x][pos_y] == 'C')
+		collectables++;
+	if (my_map->map_data[pos_x][pos_y] == 'E')
+		exits++;
+	my_map->map_data[pos_x][pos_y] = '1';
+	if (one_of_the_four_adjacent_directions_is_possible) // here what??
+		return map_valid;
+	return map_invalid;
+ }
 
 void get_data(char *file, t_game_map *my_map)
 {
@@ -92,6 +84,15 @@ void get_data(char *file, t_game_map *my_map)
 	close(fd);
 }
 
+int check_floods(t_game_map *my_map)
+{
+	int res;
+
+	res = 0;
+	res += flood_fill(my_map->player_position[0], my_map->player_position[1], 'C', my_map);
+	res += flood_fill(my_map->player_position[0], my_map->player_position[1], 'E', my_map);
+}
+
 int parse_map(char *file, t_game_map *my_map)
 {
 	count_size(file, my_map);
@@ -101,7 +102,10 @@ int parse_map(char *file, t_game_map *my_map)
       write(2, "Error!\n", 7);   
       return (0);            
    	}
-	flood_fill(my_map->player_position[0], my_map->player_position[1], 'E', my_map);
+	if(flood_fill(my_map->player_position[0], my_map->player_position[1], 'E', my_map))
+		printf("One exit");
+	else 
+		printf("NOT one exit");
 	return 1;
 }
 
@@ -110,8 +114,8 @@ int parse_map(char *file, t_game_map *my_map)
 int main()
 {
 	t_game_map map;
-	first_check("map3.ber");
+	first_check("map2.ber");
 	// valid_map("map2.ber", &map); // if this is wrong, don´t continue
-	parse_map("map3.ber", &map);
+	parse_map("map2.ber", &map);
 	return 1;
 }
