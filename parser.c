@@ -97,11 +97,11 @@ int parse_map(char *file, t_game_map *my_map)
 	return 1;
 }
 
-int main()
-{
-	t_game_map map;
-	first_check("map3.ber");
-	parse_map("map3.ber", &map);
-	// if this is wrong, don´t continue
-	return 1;
-}
+// int main()
+// {
+// 	t_game_map map;
+// 	first_check("map3.ber");
+// 	parse_map("map3.ber", &map);
+// 	// if this is wrong, don´t continue
+// 	return 1;
+// }

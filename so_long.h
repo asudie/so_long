@@ -6,10 +6,11 @@
 #include "libft/libft.h"
 #include <stdio.h> // DELETE
 #include <fcntl.h>
-// #include "mlx/mlx.h"
+#include "minilibx-linux/mlx.h"
 #include <stdlib.h>
 // #include <X11/X.h>
 // #include <X11/keysym.h>
+
 
 typedef struct s_game_map
 {
