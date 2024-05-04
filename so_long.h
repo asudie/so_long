@@ -45,7 +45,7 @@ int check_str(int fd);
 int check_ber(char *str);
 int check_ber(char *str);
 int nl_strlen(char *s);
-int check_paths(t_game_map *my_map);
+ int check_paths(int pos_x, int pos_y, t_game_map *my_map);
 int check_items(t_game_map *map);
 
 #endif
