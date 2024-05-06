@@ -7,7 +7,7 @@ else
  INCLUDES = -I/opt/X11/include -Imlx -Ilibft/
 endif
  
-MLX_DIR = ./mlx
+MLX_DIR = ./minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
 LIBS = -Llibft -lft
 MAKE_LIB = ar -rcs
@@ -48,5 +48,6 @@ $(MLX_LIB):
 clean :
 	rm -rf *.dSYM a.out *.o
 	cd libft && $(MAKE) clean
+	cd minilibx-linux && $(MAKE) clean
 
 .PHONY : all clean fclean re
