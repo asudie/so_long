@@ -26,32 +26,27 @@ OBJS = $(SRCS:.c=.o)
 all: $(MLX_LIB) $(NAME)
 
 $(NAME) : $(ARCHIVE)
- cd libft; make
- $(CC) $(SRCS) libft/libft.a  -o $@
+	cd libft; make
+	$(CC) $(SRCS) libft/libft.a $(MLX_FLAGS) -o $@
 
 $(ARCHIVE) : $(OBJS)
- $(MAKE_LIB) $(ARCHIVE) $^
+	$(MAKE_LIB) $(ARCHIVE) $^
 
 test:
- cd libft; make
- $(CC) $(CFLAGS) -g so_long.c validate_map.c parser.c libft/libft.a gnl/get_next_line.c gnl/get_next_line_utils.c
-
-$(NAME) : $(ARCHIVE)
- cd libft; make
- cd printf; make
- $(CC) *.c libft/libft.a printf/libftprintf.a  -o $@
+	cd libft; make
+	$(CC) $(CFLAGS) -g so_long.c validate_map.c parser.c libft/libft.a gnl/get_next_line.c gnl/get_next_line_utils.c
  
 .c.o:
- $(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
+	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
  
 # $(NAME): $(OBJS)
 #  $(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS)
  
 $(MLX_LIB):
- @make -C $(MLX_DIR)
+	@make -C $(MLX_DIR)
 
 clean :
- rm -rf *.dSYM a.out *.o
- cd libft && $(MAKE) clean
+	rm -rf *.dSYM a.out *.o
+	cd libft && $(MAKE) clean
 
 .PHONY : all clean fclean re
