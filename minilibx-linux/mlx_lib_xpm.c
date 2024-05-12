@@ -10,9 +10,10 @@
 
 
 #include	"mlx_int.h"
+#include <X11/xpm.h>
 
 
-
+int	mlx_int_egal_img(XImage *img1,XImage *img2);
 
 void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
 				     int (*xpm_func)(),void *param)
@@ -83,14 +84,14 @@ int	mlx_int_egal_img(XImage *img1,XImage *img2)
 }
 
 
-void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
+/* void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
 			       int *width,int *height)
 {
   return (mlx_int_xpm_f_image(xvar,width,height,XpmReadFileToImage,filename));
-}
+} */
 
 
-void	*mlx_xpm_to_image(t_xvar *xvar,char **data,int *width,int *height)
+/* void	*mlx_xpm_to_image(t_xvar *xvar,char **data,int *width,int *height)
 {
   return (mlx_int_xpm_f_image(xvar,width,height,XpmCreateImageFromData,(void *)data));
-}
+} */

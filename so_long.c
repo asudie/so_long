@@ -1,7 +1,7 @@
 #include "so_long.h"
 
  
-int on_destroy(t_data *data)
+/* int on_destroy(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
@@ -15,7 +15,7 @@ int on_keypress(int keysym, t_data *data)
 	(void)data;
 	printf("Pressed key: %d\\n", keysym);
 	return (0);
-}
+} */
 
  
 int main(void)
@@ -36,12 +36,12 @@ int main(void)
 		return (free(data.mlx_ptr), 1);
  
 	// Register key release hook
-	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
+	// mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
  
 	// Register destroy hook
-	mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &data);
+	// mlx_hook(data.win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, &data);
  
 	// Loop over the MLX pointer
-	mlx_loop(data.mlx_ptr);
+	// mlx_loop(data.mlx_ptr);
 	return (0);
 }

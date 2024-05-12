@@ -8,8 +8,9 @@
 #include <fcntl.h>
 #include "minilibx-linux/mlx.h"
 #include <stdlib.h>
-// #include <X11/X.h>
-// #include <X11/keysym.h>
+#include <X11/X.h>
+#include <X11/xpm.h>
+#include <X11/keysym.h>
 
 
 typedef struct s_game_map
