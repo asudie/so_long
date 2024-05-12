@@ -1,6 +1,6 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra -g
 ifeq ($(shell uname), Linux)
  INCLUDES = -I/usr/include -Imlx_linux -Ilibft/
 else
@@ -29,7 +29,7 @@ all: $(MLX_LIB) $(NAME)
 
 $(NAME) : $(ARCHIVE)
 	cd libft; make
-	$(CC) $(SRCS) libft/libft.a $(MLX_FLAGS) -o $@
+	$(CC) -g $(SRCS) libft/libft.a $(MLX_FLAGS) -o $@
 
 $(ARCHIVE) : $(OBJS)
 	$(MAKE_LIB) $(ARCHIVE) $^
