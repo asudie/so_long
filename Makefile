@@ -15,7 +15,7 @@ MAKE_LIB = ar -rcs
 # MLX_LIBS_LINUX = -L$(MLX_F) -lmlx_Linux -I$(MLX_F)/mlx.h -lXext -lX11 -lm  -L/usr/lib/X11 -lm -lz
 
 ifeq ($(shell uname), Linux)
- MLX_FLAGS = -Lmlx -Imlx_linux -lXext -lX11 -lXpm -lXrandr
+ MLX_FLAGS = -Lmlx -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lXpm -lXrandr -lm -lz
 else
  MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
 endif
