@@ -6,12 +6,13 @@
 #include "libft/libft.h"
 #include <stdio.h> // DELETE
 #include <fcntl.h>
-#include "minilibx-linux/mlx.h"
+// #include "minilibx-linux/mlx.h"
+#include <mlx.h>
 #include <stdlib.h>
-#include <X11/X.h>
-#include <X11/xpm.h>
-#include <X11/keysym.h>
-#include <X11/Xlib.h>
+// #include <X11/X.h>
+// // #include <X11/xpm.h>
+// #include <X11/keysym.h>
+// #include <X11/Xlib.h>
 
 typedef struct s_game_map
 {
@@ -47,7 +48,7 @@ int check_str(int fd);
 int check_ber(char *str);
 int check_ber(char *str);
 int nl_strlen(char *s);
-int check_paths(int pos_x, int pos_y, t_game_map *my_map);
+int check_paths(int pos_x, int pos_y, char	**map_check, int max_score);
 int check_items(t_game_map *map);
 void draw_map(t_data *data);
 void print_map(t_data *data);

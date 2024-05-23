@@ -10,7 +10,7 @@
 
 
 #include	"mlx_int.h"
-#include <X11/xpm.h>
+// #include < X11/xpm.h>
 
 
 int	mlx_int_egal_img(XImage *img1,XImage *img2);

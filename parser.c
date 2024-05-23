@@ -19,45 +19,55 @@ void count_size(char *file, t_game_map *my_map)
 	close(fd);
 }
 
-// int flood_fill(int pos_x, int pos_y, int target, t_game_map *my_map)
-// {
-// 	int res = 0;
-
-//    if(my_map->map_data[pos_x][pos_y] == '1') // if there is no wall or if i haven't been there
-//       return 0;                                              // already go back
-
-//    if(my_map->map_data[pos_x][pos_y] == target) // if it's not color go back
-//       return 1;
-
-//    my_map->map_data[pos_x][pos_y] = '1'; // mark the point so that I know if I passed through it.
-
-//    res += flood_fill(pos_x + 1, pos_y, target, my_map); // then i can either go south
-//    res +=flood_fill(pos_x - 1, pos_y, target, my_map);  // or north
-//    res +=flood_fill(pos_x, pos_y + 1, target, my_map);  // or east
-//    res +=flood_fill(pos_x, pos_y - 1, target, my_map);  // or west
-
-//    return res;
-
-// }
-
 int collectables = 0;
 int exits = 0;
 
-// collectables = 0;
-// exits = 0;
-
-int check_paths(int pos_x, int pos_y, t_game_map *my_map)
+char	*ft_strcpy(char *dst, char *src)
 {
-	if (collectables == my_map->max_score && exits == 1)
+	int	i;
+
+	i = 0;
+	dst = malloc(sizeof(char) * ft_strlen(src) + 1);
+	if (!dst)
+		return (NULL);
+	while (src[i] != '\0' && src[i] != '\n')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+char **copy_map(t_game_map *my_map)
+{
+	char	**map_check;
+	int i = 0;
+
+	map_check = malloc((sizeof(char*) * my_map->map_height));
+	while (i < my_map->map_height)
+	{
+		map_check[i] = ft_strcpy(map_check[i], my_map->map_data[i]);
+		i++;
+	}
+	map_check[i] = NULL;
+	return map_check;
+}
+
+int check_paths(int pos_x, int pos_y, char	**map_check, int max_score)
+{
+	
+
+	if (collectables == max_score && exits == 1)
 		return 1;
-	if (my_map->map_data[pos_x][pos_y] == '1')
+	if (map_check[pos_x][pos_y] == '1')
 		return 0;
-	if (my_map->map_data[pos_x][pos_y] == 'C')
+	if (map_check[pos_x][pos_y] == 'C')
 		collectables++;
-	if (my_map->map_data[pos_x][pos_y] == 'E')
+	if (map_check[pos_x][pos_y] == 'E')
 		exits++;
-	my_map->map_data[pos_x][pos_y] = '1';
-	if (check_paths(pos_x + 1, pos_y, my_map) || check_paths(pos_x - 1, pos_y, my_map) || check_paths(pos_x, pos_y + 1, my_map) || check_paths(pos_x, pos_y - 1, my_map)) // here what??
+	map_check[pos_x][pos_y] = '1';
+	if (check_paths(pos_x + 1, pos_y, map_check, max_score) || check_paths(pos_x - 1, pos_y, map_check, max_score) || check_paths(pos_x, pos_y + 1, map_check, max_score) || check_paths(pos_x, pos_y - 1, map_check, max_score))
 		return 1;
 	return 0;
 }
@@ -68,18 +78,19 @@ void get_data(char *file, t_data *data)
 	int i;
 
 	fd = open(file, O_RDONLY);
-	data->map->map_data = malloc(sizeof(char *) * data->map->map_height);
+	data->map->map_data = malloc(sizeof(char **) * data->map->map_height);
 	i = 0;
-	data->map->map_data[i] = malloc(sizeof(char) * data->map->map_length);
+	// data->map->map_data[i] = malloc(sizeof(char*) * data->map->map_length);
 	data->map->map_data[i] = get_next_line(fd);
 	printf("%s\n", data->map->map_data[i]);
 	while (i < data->map->map_height - 1)
 	{
 		i++;
-		data->map->map_data[i] = malloc(sizeof(char) * data->map->map_length);
+		// data->map->map_data[i] = malloc(sizeof(char) * data->map->map_length);
 		data->map->map_data[i] = get_next_line(fd);
 		printf("%s\n", data->map->map_data[i]);
 	}
+	print_map(data);
 	close(fd);
 }
 
@@ -87,12 +98,13 @@ int parse_map(char *file, t_data *data)
 {
 	count_size(file, data->map);
 	get_data(file, data);
+	char	**map_check = copy_map(data->map);
 	if (!check_items(data->map))
 	{
 		write(2, "Error!\n", 7);
 		return (0);
 	}
-	if (check_paths(data->map->player_position[0], data->map->player_position[1], data->map))
+	if (check_paths(data->map->player_position[0], data->map->player_position[1], map_check, data->map->max_score))
 		printf("Map is VALID");
 	else
 		printf("Map is INVALID");
