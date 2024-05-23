@@ -30,7 +30,7 @@ void draw_map(t_data *data)
 	data->textures[4] = mlx_xpm_file_to_image(data->mlx_ptr, "textures/exit.xpm", &x, &y);
 
 	i = 0;
-	while (data->map->map_data[i] != NULL) // Check for the end of the map array
+	while (i < data->map->map_height) // Check for the end of the map array
 	{
 		j = 0;
 		while (data->map->map_data[i][j] != '\0' && data->map->map_data[i][j] != '\n') // Check for end of line or end of string
@@ -51,14 +51,26 @@ void draw_map(t_data *data)
 	}
 }
 
+void print_map(t_data *data)
+{
+	int i, j;
+	i = 0;
+	while (i < data->map->map_height) // Loop through all rows
+	{
+		printf("%s", data->map->map_data[i]);
+		i++;
+	}
+}
+
 int main(void)
 {
 	t_data *data = malloc(sizeof(t_data));
 	data->map = malloc(sizeof(t_game_map));
 	// t_game_map map;
 	first_check("map1.ber");
-	parse_map("map1.ber", data->map);
+	parse_map("map1.ber", data);
 	// if this is wrong, don´t continue
+	print_map(data);
 
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
