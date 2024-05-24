@@ -69,16 +69,17 @@ void right_work(t_data *data)
 	}
 }
 
-void key_work(int keysym, t_data *data)
+void key_work(int keysym, t_data *data) // FIXME : change names of funcrtiones
 {
 	if(keysym == 97 || keysym == 65361)
-		left_work(data);
-	if(keysym == 115 || keysym == 65364)
 		down_work(data);
-	if(keysym == 119 || keysym == 65362)
-		up_work(data);
-	if(keysym == 100 || keysym == 65363)
+	if(keysym == 115 || keysym == 65364)
 		right_work(data);
+	if(keysym == 119 || keysym == 65362)
+		left_work(data);
+	if(keysym == 100 || keysym == 65363)
+		up_work(data);
+		
 	draw_map(data);
 }
 
