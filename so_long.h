@@ -13,6 +13,9 @@
 // // #include <X11/xpm.h>
 // #include <X11/keysym.h>
 // #include <X11/Xlib.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
 
 typedef struct s_game_map
 {
@@ -52,5 +55,7 @@ int check_paths(int pos_x, int pos_y, char	**map_check, int max_score);
 int check_items(t_game_map *map);
 void draw_map(t_data *data);
 void print_map(t_data *data);
+int on_destroy(t_data *data);
+int on_keypress(int keysym, t_data *data);
 
 #endif

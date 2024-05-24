@@ -108,14 +108,7 @@ int parse_map(char *file, t_data *data)
 		printf("Map is VALID");
 	else
 		printf("Map is INVALID");
+	data->map->game_over = 0;
+	data->map->game_score = 0;
 	return 1;
 }
-
-// int main()
-// {
-// 	t_game_map map;
-// 	first_check("map3.ber");
-// 	parse_map("map3.ber", &map);
-// 	// if this is wrong, don´t continue
-// 	return 1;
-// }
