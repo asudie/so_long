@@ -104,10 +104,11 @@ int parse_map(char *file, t_data *data)
 		write(2, "Error!\n", 7);
 		return (0);
 	}
-	if (check_paths(data->map->player_position[0], data->map->player_position[1], map_check, data->map->max_score))
-		printf("Map is VALID");
-	else
-		printf("Map is INVALID");
+	if (!check_paths(data->map->player_position[0], data->map->player_position[1], map_check, data->map->max_score))
+	{
+		write(2, "Error!\n", 7);
+		return (0);
+	}
 	data->map->game_over = 0;
 	data->map->game_score = 0;
 	return 1;

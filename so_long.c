@@ -9,7 +9,29 @@ int on_destroy(t_data *data)
 	return (0);
 }
 
-void left_work(t_data *data)
+void find_exit(t_data *data)
+{
+	int i, j;
+
+	i = 0;
+	while (i < data->map->map_height) // Check for the end of the map array
+	{
+		j = 0;
+		while (data->map->map_data[i][j] != '\0' && data->map->map_data[i][j] != '\n') // Check for end of line or end of string
+		{
+			if (data->map->map_data[i][j] == 'E')
+			{
+				data->map->map_data[i][j] = 'O';
+				return;
+			}
+				
+			j++;
+		}
+		i++;
+	}
+}
+
+void up_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
@@ -21,10 +43,16 @@ void left_work(t_data *data)
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[0] = x - 1;
 		data->map->game_score++;
+		printf("Number of movements: %d\n", data->map->game_score);
+	}
+	if(data->map->map_data[x - 1][y] == 'E')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
 	}
 }
 
-void down_work(t_data *data)
+void left_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
@@ -32,29 +60,46 @@ void down_work(t_data *data)
 	{
 		if(data->map->map_data[x][y - 1] == 'C')
 			data->map->game_over++;
-		data->map->map_data[x][y - 1] = 'P';
+		data->map->map_data[x][y - 1] = 'L';
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[1] = y - 1;
 		data->map->game_score++;
+		printf("Number of movements: %d\n", data->map->game_score);
+	}
+	if(data->map->map_data[x][y - 1] == 'E')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
 	}
 }
 
-void up_work(t_data *data)
+void right_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
 	if(data->map->map_data[x][y + 1] != '1'  && data->map->map_data[x][y + 1] != 'E')
 	{
 		if(data->map->map_data[x][y + 1] == 'C')
+		{
 			data->map->game_over++;
+			if(data->map->game_over == data->map->max_score)
+				find_exit(data);
+		}
+			
 		data->map->map_data[x][y + 1] = 'P';
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[1] = y + 1;
 		data->map->game_score++;
+		printf("Number of movements: %d\n", data->map->game_score);
+	}
+	if(data->map->map_data[x][y + 1] == 'O')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
 	}
 }
 
-void right_work(t_data *data)
+void down_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
@@ -66,27 +111,34 @@ void right_work(t_data *data)
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[0] = x + 1;
 		data->map->game_score++;
+		printf("Number of movements: %d\n", data->map->game_score);
+	}
+	if(data->map->map_data[x + 1][y] == 'E')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
 	}
 }
 
-void key_work(int keysym, t_data *data) // FIXME : change names of funcrtiones
+void key_work(int keysym, t_data *data)
 {
 	if(keysym == 97 || keysym == 65361)
-		down_work(data);
-	if(keysym == 115 || keysym == 65364)
-		right_work(data);
-	if(keysym == 119 || keysym == 65362)
 		left_work(data);
-	if(keysym == 100 || keysym == 65363)
+	if(keysym == 115 || keysym == 65364)
+		down_work(data);
+	if(keysym == 119 || keysym == 65362)
 		up_work(data);
-		
+	if(keysym == 100 || keysym == 65363)
+		right_work(data);
+	if(keysym == 65307)
+		on_destroy(data);
 	draw_map(data);
 }
 
 int on_keypress(int keysym, t_data *data)
 {
 	(void)data;
-	printf("Pressed key: %d\n", keysym);
+	// printf("Pressed key: %d\n", keysym);
 	key_work(keysym, data);
 	return (0);
 }
@@ -105,6 +157,8 @@ void draw_map(t_data *data)
 	data->textures[2] = mlx_xpm_file_to_image(data->mlx_ptr, "textures/player.xpm", &x, &y);
 	data->textures[3] = mlx_xpm_file_to_image(data->mlx_ptr, "textures/collect.xpm", &x, &y);
 	data->textures[4] = mlx_xpm_file_to_image(data->mlx_ptr, "textures/exit.xpm", &x, &y);
+	data->textures[5] = mlx_xpm_file_to_image(data->mlx_ptr, "textures/player_left.xpm", &x, &y);
+	data->textures[6] = mlx_xpm_file_to_image(data->mlx_ptr, "textures/o_exit.xpm", &x, &y);
 
 	i = 0;
 	while (i < data->map->map_height) // Check for the end of the map array
@@ -122,6 +176,10 @@ void draw_map(t_data *data)
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[3], j * x, i * y);
 			if (data->map->map_data[i][j] == 'E')
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[4], j * x, i * y);
+			if (data->map->map_data[i][j] == 'L')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[5], j * x, i * y);
+			if (data->map->map_data[i][j] == 'O')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[6], j * x, i * y);
 			j++;
 		}
 		i++;
@@ -152,28 +210,31 @@ int main(int argc, char **argv)
 	data->map = malloc(sizeof(t_game_map));
 	char *file = argv[1];
 	first_check(file);
-	parse_map(file, data);
+	if(parse_map(file, data))
+	{
+
+		data->mlx_ptr = mlx_init();
+		if (!data->mlx_ptr)
+			return (1); // HERE
+		data->win_ptr = mlx_new_window(data->mlx_ptr, 65 * data->map->map_length, 65 * data->map->map_height, "Help Bibi find the rocket");
+		if (!data->win_ptr)
+			return (free(data->mlx_ptr), 1);
+		
+		draw_map(data);
+
+		// Register key release hook
+		// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
+
+		mlx_key_hook(data->win_ptr, on_keypress, data);
+
+		// Register destroy hook
+		mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, on_destroy, data);
+
+		// Loop over the MLX pointer
+		mlx_loop(data->mlx_ptr);
+	}
 	// if this is wrong, don´t continue
 	// print_map(data);
 
-	data->mlx_ptr = mlx_init();
-	if (!data->mlx_ptr)
-		return (1); // HERE
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 65 * data->map->map_length, 65 * data->map->map_height, "Help Bibi find the rocket");
-	if (!data->win_ptr)
-		return (free(data->mlx_ptr), 1);
-	
-	draw_map(data);
-
-	// Register key release hook
-	// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
-
-	mlx_key_hook(data->win_ptr, on_keypress, data);
-
-	// Register destroy hook
-	mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, on_destroy, data);
-
-	// Loop over the MLX pointer
-	mlx_loop(data->mlx_ptr);
 	return (0);
 }

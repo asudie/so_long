@@ -39,7 +39,7 @@ typedef struct s_data
 {
     void *mlx_ptr;     // MLX pointer
     void *win_ptr;     // MLX window pointer
-    void *textures[5]; // MLX image pointers (on the stack)
+    void *textures[7]; // MLX image pointers (on the stack)
     t_game_map *map;   // Map pointer (contains map details - preferably kept on the stack) 0B, 1W, 2P, 3C, 4E
 } t_data;
 
