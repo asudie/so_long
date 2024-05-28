@@ -1,21 +1,14 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
-// #include "minilibx_opengl_20191021/mlx.h"
 #include "gnl/get_next_line.h"
 #include "libft/libft.h"
 #include <stdio.h> // DELETE
 #include <fcntl.h>
-// #include "minilibx-linux/mlx.h"
 #include <mlx.h>
 #include <stdlib.h>
-// #include <X11/X.h>
-// // #include <X11/xpm.h>
-// #include <X11/keysym.h>
-// #include <X11/Xlib.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
 
 typedef struct s_game_map
 {

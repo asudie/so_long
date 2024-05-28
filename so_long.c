@@ -138,7 +138,6 @@ void key_work(int keysym, t_data *data)
 int on_keypress(int keysym, t_data *data)
 {
 	(void)data;
-	// printf("Pressed key: %d\n", keysym);
 	key_work(keysym, data);
 	return (0);
 }
@@ -190,7 +189,6 @@ void print_map(t_data *data)
 {
 	int i, j;
 	i = 0;
-	// printf("", data->map_height);
 	while (i < data->map->map_height) // Loop through all rows
 	{
 		j = 0;
@@ -209,8 +207,8 @@ int main(int argc, char **argv)
 	t_data *data = malloc(sizeof(t_data));
 	data->map = malloc(sizeof(t_game_map));
 	char *file = argv[1];
-	first_check(file);
-	if(parse_map(file, data))
+	
+	if(first_check(file) && parse_map(file, data))
 	{
 
 		data->mlx_ptr = mlx_init();
@@ -221,10 +219,6 @@ int main(int argc, char **argv)
 			return (free(data->mlx_ptr), 1);
 		
 		draw_map(data);
-
-		// Register key release hook
-		// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, &data);
-
 		mlx_key_hook(data->win_ptr, on_keypress, data);
 
 		// Register destroy hook
@@ -233,8 +227,7 @@ int main(int argc, char **argv)
 		// Loop over the MLX pointer
 		mlx_loop(data->mlx_ptr);
 	}
-	// if this is wrong, don´t continue
-	// print_map(data);
-
+	free(data->map);
+	free(data);
 	return (0);
 }

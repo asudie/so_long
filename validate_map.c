@@ -3,13 +3,17 @@
 int check_one(char *str)
 {
 	int i = 0;
-	while(str[i] != '\0')
+	if(str)
 	{
-		if(str[i] != '1' && str[i] != '\n')
-			return 0;
-		i++;
+		while(str[i] != '\0')
+		{
+			if(str[i] != '1' && str[i] != '\n')
+				return 0;
+			i++;
+		}
+		return 1;
 	}
-	return 1;
+	return (0);
 }
 
 int nl_strlen(char *s)
@@ -114,12 +118,12 @@ int first_check(char *str)
 	fd = open(str, O_RDONLY);
 	if(fd == -1)
    {
-      write(2, "Error!\n", 7);   
+      write(2, "Error\n", 6);   
       return (0);            
    }
 	if(!check_ber(str) || !check_str(fd))
 	{
-      write(2, "Error!\n", 7);   
+      write(2, "Error\n", 6);   
       return (0);            
 	}
 	close(fd);

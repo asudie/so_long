@@ -1,22 +1,31 @@
 #include "so_long.h"
 
-void count_size(char *file, t_game_map *my_map)
+int count_size(char *file, t_game_map *my_map)
 {
 	int fd;
 	char *temp_str;
 	int i;
+	int res;
 
+	res = 1;
 	fd = open(file, O_RDONLY);
 	i = 0;
 	temp_str = get_next_line(fd);
-	my_map->map_length = nl_strlen(temp_str);
-	while (temp_str != NULL)
+	if(temp_str)
 	{
-		i++;
-		temp_str = get_next_line(fd);
+		my_map->map_length = nl_strlen(temp_str);
+		while (temp_str != NULL)
+		{
+			i++;
+			temp_str = get_next_line(fd);
+		}
+		my_map->map_height = i;
+	} else
+	{
+		res = 0;
 	}
-	my_map->map_height = i;
 	close(fd);
+	return (res);
 }
 
 int collectables = 0;
@@ -80,36 +89,38 @@ void get_data(char *file, t_data *data)
 	fd = open(file, O_RDONLY);
 	data->map->map_data = malloc(sizeof(char **) * data->map->map_height);
 	i = 0;
-	// data->map->map_data[i] = malloc(sizeof(char*) * data->map->map_length);
 	data->map->map_data[i] = get_next_line(fd);
-	printf("%s\n", data->map->map_data[i]);
+	// printf("%s\n", data->map->map_data[i]);
 	while (i < data->map->map_height - 1)
 	{
 		i++;
-		// data->map->map_data[i] = malloc(sizeof(char) * data->map->map_length);
 		data->map->map_data[i] = get_next_line(fd);
-		printf("%s\n", data->map->map_data[i]);
+		// printf("%s\n", data->map->map_data[i]);
 	}
-	print_map(data);
+	// print_map(data);
 	close(fd);
 }
 
 int parse_map(char *file, t_data *data)
 {
-	count_size(file, data->map);
-	get_data(file, data);
-	char	**map_check = copy_map(data->map);
-	if (!check_items(data->map))
+	if(count_size(file, data->map))
 	{
-		write(2, "Error!\n", 7);
-		return (0);
+		get_data(file, data);
+		char	**map_check = copy_map(data->map);
+		if (!check_items(data->map))
+		{
+			write(2, "Error\n", 6);
+			return (0);
+		}
+		if (!check_paths(data->map->player_position[0], data->map->player_position[1], map_check, data->map->max_score))
+		{
+			write(2, "Error\n", 6);
+			return (0);
+		}
+		data->map->game_over = 0;
+		data->map->game_score = 0;
+		return (1);
 	}
-	if (!check_paths(data->map->player_position[0], data->map->player_position[1], map_check, data->map->max_score))
-	{
-		write(2, "Error!\n", 7);
-		return (0);
-	}
-	data->map->game_over = 0;
-	data->map->game_score = 0;
-	return 1;
+	
+	return (0);
 }
