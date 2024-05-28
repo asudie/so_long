@@ -35,6 +35,11 @@ void up_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
+	if(data->map->map_data[x - 1][y] == 'O')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
+	}
 	if(data->map->map_data[x - 1][y] != '1' && data->map->map_data[x - 1][y] != 'E')
 	{
 		if(data->map->map_data[x - 1][y] == 'C')
@@ -45,17 +50,17 @@ void up_work(t_data *data)
 		data->map->game_score++;
 		printf("Number of movements: %d\n", data->map->game_score);
 	}
-	if(data->map->map_data[x - 1][y] == 'E')
-	{
-		if(data->map->game_over == data->map->max_score)
-			on_destroy(data);
-	}
 }
 
 void left_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
+	if(data->map->map_data[x][y - 1] == 'O')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
+	}
 	if(data->map->map_data[x][y - 1] != '1' && data->map->map_data[x][y - 1] != 'E')
 	{
 		if(data->map->map_data[x][y - 1] == 'C')
@@ -66,17 +71,17 @@ void left_work(t_data *data)
 		data->map->game_score++;
 		printf("Number of movements: %d\n", data->map->game_score);
 	}
-	if(data->map->map_data[x][y - 1] == 'E')
-	{
-		if(data->map->game_over == data->map->max_score)
-			on_destroy(data);
-	}
 }
 
 void right_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
+	if(data->map->map_data[x][y + 1] == 'O')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
+	}
 	if(data->map->map_data[x][y + 1] != '1'  && data->map->map_data[x][y + 1] != 'E')
 	{
 		if(data->map->map_data[x][y + 1] == 'C')
@@ -92,17 +97,17 @@ void right_work(t_data *data)
 		data->map->game_score++;
 		printf("Number of movements: %d\n", data->map->game_score);
 	}
-	if(data->map->map_data[x][y + 1] == 'O')
-	{
-		if(data->map->game_over == data->map->max_score)
-			on_destroy(data);
-	}
 }
 
 void down_work(t_data *data)
 {
 	int x = data->map->player_position[0];
 	int y = data->map->player_position[1];
+	if(data->map->map_data[x + 1][y] == 'O')
+	{
+		if(data->map->game_over == data->map->max_score)
+			on_destroy(data);
+	}
 	if(data->map->map_data[x + 1][y] != '1' && data->map->map_data[x + 1][y] != 'E')
 	{
 		if(data->map->map_data[x + 1][y] == 'C')
@@ -112,11 +117,6 @@ void down_work(t_data *data)
 		data->map->player_position[0] = x + 1;
 		data->map->game_score++;
 		printf("Number of movements: %d\n", data->map->game_score);
-	}
-	if(data->map->map_data[x + 1][y] == 'E')
-	{
-		if(data->map->game_over == data->map->max_score)
-			on_destroy(data);
 	}
 }
 
