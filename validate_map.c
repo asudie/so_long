@@ -86,9 +86,14 @@ int check_items(t_game_map *my_map)
 				my_map->player_position[1] = j;
 				pe++;
 			}
-				
 			else if(my_map->map_data[i][j] == 'C')
+			{
 				c++;
+			} else if(my_map->map_data[i][j] != '0' && my_map->map_data[i][j] != '\0' && my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '1')
+			{
+				return (0);
+			}
+				
 			j++;
 		}
 		if(my_map->map_data[i][j] != '\0')

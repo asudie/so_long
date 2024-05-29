@@ -43,7 +43,11 @@ void up_work(t_data *data)
 	if(data->map->map_data[x - 1][y] != '1' && data->map->map_data[x - 1][y] != 'E')
 	{
 		if(data->map->map_data[x - 1][y] == 'C')
+		{
 			data->map->game_over++;
+			if(data->map->game_over == data->map->max_score)
+				find_exit(data);
+		}
 		data->map->map_data[x - 1][y] = 'P';
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[0] = x - 1;
@@ -64,7 +68,11 @@ void left_work(t_data *data)
 	if(data->map->map_data[x][y - 1] != '1' && data->map->map_data[x][y - 1] != 'E')
 	{
 		if(data->map->map_data[x][y - 1] == 'C')
+		{
 			data->map->game_over++;
+			if(data->map->game_over == data->map->max_score)
+				find_exit(data);
+		}
 		data->map->map_data[x][y - 1] = 'L';
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[1] = y - 1;
@@ -111,7 +119,11 @@ void down_work(t_data *data)
 	if(data->map->map_data[x + 1][y] != '1' && data->map->map_data[x + 1][y] != 'E')
 	{
 		if(data->map->map_data[x + 1][y] == 'C')
+		{
 			data->map->game_over++;
+			if(data->map->game_over == data->map->max_score)
+				find_exit(data);
+		}
 		data->map->map_data[x + 1][y] = 'P';
 		data->map->map_data[x][y] = '0';
 		data->map->player_position[0] = x + 1;
