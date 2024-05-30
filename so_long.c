@@ -225,18 +225,15 @@ int main(int argc, char **argv)
 
 		data->mlx_ptr = mlx_init();
 		if (!data->mlx_ptr)
-			return (1); // HERE
-		data->win_ptr = mlx_new_window(data->mlx_ptr, 65 * data->map->map_length, 65 * data->map->map_height, "Help Bibi find the rocket");
+			return (1);
+		data->win_ptr = mlx_new_window(data->mlx_ptr, 65 * data->map->map_length,
+					65 * data->map->map_height, "Help Bibi find the rocket");
 		if (!data->win_ptr)
 			return (free(data->mlx_ptr), 1);
-		
 		draw_map(data);
 		mlx_key_hook(data->win_ptr, on_keypress, data);
-
-		// Register destroy hook
-		mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, on_destroy, data);
-
-		// Loop over the MLX pointer
+		mlx_hook(data->win_ptr, DestroyNotify,
+			StructureNotifyMask, on_destroy, data);
 		mlx_loop(data->mlx_ptr);
 	}
 	free(data->map);

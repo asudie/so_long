@@ -16,7 +16,7 @@ else
  MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
-SRCS = so_long.c validate_map.c parser.c gnl/get_next_line.c gnl/get_next_line_utils.c #minilibx-linux/*.c
+SRCS = so_long.c validate_map.c parser.c gnl/get_next_line.c gnl/get_next_line_utils.c
 OBJS = $(SRCS:.c=.o)
  
 all: $(MLX_LIB) $(NAME)
@@ -34,7 +34,6 @@ $(MLX_LIB):
 clean :
 	rm -rf *.dSYM a.out *.o
 	cd libft && $(MAKE) clean
-	cd minilibx-linux && $(MAKE) clean
 
 fclean : clean
 	rm -f $(NAME)
