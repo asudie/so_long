@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:39:07 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 11:40:39 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:30:09 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,10 @@ int	check_walls(char *str)
 	if (str[0] != '1' || str[nl_strlen(str) - 1] != '1')
 		return (0);
 	return (1);
+}
+
+void	set_ij(int *i, int *j)
+{
+	*j = 0;
+	(*i)++;
 }

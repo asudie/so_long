@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:02 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 16:39:31 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:30:00 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,11 @@ void	change_pos(t_game_map *my_map, int i, int j, int *pe)
 	(*pe)++;
 }
 
-void	set_ij(int *i, int *j)
-{
-	*j = 0;
-	(*i)++;
-}
-
-int	loop_func(t_game_map *my_map, int *c, int *pe)
+int	loop_func(t_game_map *my_map, int *c, int *pe, int j)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (my_map->map_data[i][j] != '\0')
 	{
 		while (my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '\0')
@@ -80,7 +72,7 @@ int	check_items(t_game_map *my_map)
 
 	c = 0;
 	pe = 0;
-	if (!loop_func(my_map, &c, &pe))
+	if (!loop_func(my_map, &c, &pe, 0))
 		return (0);
 	if (pe == 2 && c >= 1)
 	{
