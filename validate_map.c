@@ -1,136 +1,110 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/31 11:35:02 by asmolnya          #+#    #+#             */
+/*   Updated: 2024/05/31 16:39:31 by asmolnya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int check_one(char *str)
+int	check_one(char *str)
 {
-	int i = 0;
-	if(str)
+	int	i;
+
+	i = 0;
+	if (str)
 	{
-		while(str[i] != '\0')
+		while (str[i] != '\0')
 		{
-			if(str[i] != '1' && str[i] != '\n')
-				return 0;
+			if (str[i] != '1' && str[i] != '\n')
+				return (0);
 			i++;
 		}
-		return 1;
+		return (1);
 	}
 	return (0);
 }
 
-int nl_strlen(char *s)
+void	change_pos(t_game_map *my_map, int i, int j, int *pe)
 {
-	int	size;
-
-	size = 0;
-	while (s[size] != '\n')
-	{
-		size++;
-	}
-	return (size);
+	my_map->player_position[0] = i;
+	my_map->player_position[1] = j;
+	(*pe)++;
 }
 
-int check_walls(char *str)
+void	set_ij(int *i, int *j)
 {
-	if(str[0] != '1' || str[nl_strlen(str) - 1] != '1')
-		return 0;
-	return 1;
+	*j = 0;
+	(*i)++;
 }
 
-int check_str(int fd)
+int	loop_func(t_game_map *my_map, int *c, int *pe)
 {
-	char *str1 = get_next_line(fd);
-	if(!check_one(str1))
-		return 0;
-	char *str_next = get_next_line(fd);
-	while(str_next != NULL)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (my_map->map_data[i][j] != '\0')
 	{
-		if(ft_strlen(str1) != ft_strlen(str_next))
+		while (my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '\0')
 		{
-			if(str_next[ft_strlen(str_next) - 1] != '\n')
-			{
-				if(!check_one(str_next))
-					return 0;
-				str_next = get_next_line(fd);
-				continue;
-			}
-			return (0);
+			if (my_map->map_data[i][j] == 'E')
+				(*pe)++;
+			else if (my_map->map_data[i][j] == 'P')
+				change_pos(my_map, i, j, pe);
+			else if (my_map->map_data[i][j] == 'C')
+				(*c)++;
+			else if (my_map->map_data[i][j] != '0'
+				&& my_map->map_data[i][j] != '\0'
+				&& my_map->map_data[i][j] != '\n'
+				&& my_map->map_data[i][j] != '1')
+				return (0);
+			j++;
 		}
-		if(!check_walls(str_next))
-			return 0;
-		str_next = get_next_line(fd);
+		if (my_map->map_data[i][j] != '\0')
+			set_ij(&i, &j);
 	}
 	return (1);
 }
 
-int check_items(t_game_map *my_map)
+int	check_items(t_game_map *my_map)
 {
-	// char *str;
-	int c;
-	int pe;
-	int i;
-	int j;
-	
-	// str = get_next_line(fd);
-	i = 0;
-	j = 0;
+	int	c;
+	int	pe;
+
 	c = 0;
 	pe = 0;
-	while(my_map->map_data[i][j] != '\0')
-	{
-		while(my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '\0')
-		{
-			if(my_map->map_data[i][j] == 'E')
-				pe++;
-			else if(my_map->map_data[i][j] == 'P')
-			{
-				my_map->player_position[0] = i;
-				my_map->player_position[1] = j;
-				pe++;
-			}
-			else if(my_map->map_data[i][j] == 'C')
-			{
-				c++;
-			} else if(my_map->map_data[i][j] != '0' && my_map->map_data[i][j] != '\0' && my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '1')
-			{
-				return (0);
-			}
-				
-			j++;
-		}
-		if(my_map->map_data[i][j] != '\0')
-		{
-			j = 0;
-			i++;
-		}
-	}
-	if(pe == 2 && c >= 1)
+	if (!loop_func(my_map, &c, &pe))
+		return (0);
+	if (pe == 2 && c >= 1)
 	{
 		my_map->max_score = c;
 		return (1);
-	}	
+	}
 	return (0);
 }
 
-int check_ber(char *str)
+int	first_check(char *str)
 {
-	if(ft_strncmp((str + ft_strlen(str) - 4), ".ber", 4))
-		return 0;
-	return 1;
-}
+	int	fd;
 
-int first_check(char *str)
-{
-	int fd;
 	fd = open(str, O_RDONLY);
-	if(fd == -1)
-   {
-      write(2, "Error\n", 6);   
-      return (0);            
-   }
-	if(!check_ber(str) || !check_str(fd))
+	if (fd == -1)
 	{
-      write(2, "Error\n", 6);   
-      return (0);            
+		write(2, "Error\n", 6);
+		return (0);
+	}
+	if (!check_ber(str) || !check_str(fd))
+	{
+		write(2, "Error\n", 6);
+		return (0);
 	}
 	close(fd);
-	return 1;
+	return (1);
 }
