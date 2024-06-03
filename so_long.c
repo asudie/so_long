@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:20:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/03 12:18:59 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:30:03 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,14 @@ void	draw_map(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
-	char	*file;
+	t_data	*data = NULL;
+	char	*file = NULL;
+
 	(void)argc;
 	data = malloc(sizeof(t_data));
 	data->map = malloc(sizeof(t_game_map));
+	data->map->collectables = 0;
+	data->map->exits = 0;
 	if(argv[1])
 	{
 		file = argv[1];
