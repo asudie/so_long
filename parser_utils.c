@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer_utils.c                                     :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:53:32 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 15:54:00 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:42:28 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**copy_map(t_game_map *my_map)
 	int		i;
 
 	i = 0;
-	map_check = malloc((sizeof(char *) * my_map->map_height));
+	map_check = malloc((sizeof(char *) * (my_map->map_height + 1)));
 	while (i < my_map->map_height)
 	{
 		map_check[i] = ft_strcpy(map_check[i], my_map->map_data[i]);

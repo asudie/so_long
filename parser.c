@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:30 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 19:09:49 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:50:45 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,19 @@ void	get_data(char *file, t_data *data)
 	close(fd);
 }
 
+void free_map(char **map_check)
+{
+	int	i;
+
+	i = 0;
+	while(map_check[i])
+	{
+		free(map_check[i]);
+		i++;
+	}
+	free(map_check);
+}
+
 int	parse_map(char *file, t_data *data)
 {
 	char	**map_check;
@@ -60,16 +73,19 @@ int	parse_map(char *file, t_data *data)
 		if (!check_items(data->map))
 		{
 			write(2, "Error\n", 6);
+			free_map(map_check);
 			return (0);
 		}
 		if (!check_paths(data->map->player_position[0],
 				data->map->player_position[1], map_check, data))
 		{
 			write(2, "Error\n", 6);
+			free_map(map_check);
 			return (0);
 		}
 		data->map->game_over = 0;
 		data->map->game_score = 0;
+		free_map(map_check);
 		return (1);
 	}
 	return (0);
