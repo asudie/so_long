@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:02 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 17:30:00 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:19:41 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	loop_func(t_game_map *my_map, int *c, int *pe, int j)
 	while (my_map->map_data[i][j] != '\0')
 	{
 		while (my_map->map_data[i][j] != '\n' && my_map->map_data[i][j] != '\0')
-		{
+		{	
 			if (my_map->map_data[i][j] == 'E')
 				(*pe)++;
 			else if (my_map->map_data[i][j] == 'P')

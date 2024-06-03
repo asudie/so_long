@@ -21,7 +21,7 @@ OBJS = $(SRCS:.c=.o)
  
 all: $(MLX_LIB) $(NAME)
 
-$(NAME) : $(ARCHIVE)
+$(NAME) : $(OBJS) $(ARCHIVE)
 	cd libft; make
 	$(CC) -g $(SRCS) libft/libft.a $(MLX_FLAGS) -o $@
 

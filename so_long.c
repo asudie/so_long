@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:20:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 16:11:41 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:18:59 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,31 +73,41 @@ void	draw_map(t_data *data)
 		}
 		i++;
 	}
+	mlx_destroy_image(data->mlx_ptr, data->textures[0]);
+	mlx_destroy_image(data->mlx_ptr, data->textures[1]);
+	mlx_destroy_image(data->mlx_ptr, data->textures[2]);
+	mlx_destroy_image(data->mlx_ptr, data->textures[3]);
+	mlx_destroy_image(data->mlx_ptr, data->textures[4]);
+	mlx_destroy_image(data->mlx_ptr, data->textures[5]);
+	mlx_destroy_image(data->mlx_ptr, data->textures[6]);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	*data;
 	char	*file;
-
+	(void)argc;
 	data = malloc(sizeof(t_data));
 	data->map = malloc(sizeof(t_game_map));
-	file = argv[1];
-	if (first_check(file) && parse_map(file, data))
+	if(argv[1])
 	{
-		data->mlx_ptr = mlx_init();
-		if (!data->mlx_ptr)
-			return (1);
-		data->win_ptr = mlx_new_window(data->mlx_ptr, 65
-				* data->map->map_length, 65 * data->map->map_height,
-				"Help Bibi find the rocket");
-		if (!data->win_ptr)
-			return (free(data->mlx_ptr), 1);
-		draw_map(data);
-		mlx_key_hook(data->win_ptr, on_keypress, data);
-		mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, on_destroy,
-			data);
-		mlx_loop(data->mlx_ptr);
+		file = argv[1];
+		if (first_check(file) && parse_map(file, data))
+		{
+			data->mlx_ptr = mlx_init();
+			if (!data->mlx_ptr)
+				return (1);
+			data->win_ptr = mlx_new_window(data->mlx_ptr, 65
+					* data->map->map_length, 65 * data->map->map_height,
+					"Help Bibi find the rocket");
+			if (!data->win_ptr)
+				return (free(data->mlx_ptr), 1);
+			draw_map(data);
+			mlx_key_hook(data->win_ptr, on_keypress, data);
+			mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, on_destroy,
+				data);
+			mlx_loop(data->mlx_ptr);
+		}
 	}
 	free(data->map);
 	free(data);
