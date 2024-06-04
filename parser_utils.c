@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:53:32 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/03 16:42:28 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:29:29 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	count_size(char *file, t_game_map *my_map)
 		while (temp_str != NULL)
 		{
 			i++;
+			free(temp_str);
 			temp_str = get_next_line(fd);
 		}
 		my_map->map_height = i;
@@ -37,6 +38,7 @@ int	count_size(char *file, t_game_map *my_map)
 	{
 		res = 0;
 	}
+	free(temp_str);
 	close(fd);
 	return (res);
 }
