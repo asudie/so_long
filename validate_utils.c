@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:39:07 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 17:30:09 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:34:49 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	check_str(int fd)
 
 	str1 = get_next_line(fd);
 	if (!check_one(str1))
+	{
+		free(str1);
 		return (0);
+	}
 	str_next = get_next_line(fd);
 	while (str_next != NULL)
 	{
@@ -35,16 +38,30 @@ int	check_str(int fd)
 			if (str_next[ft_strlen(str_next) - 1] != '\n')
 			{
 				if (!check_one(str_next))
+				{
+					free(str1);
+					free(str_next);
 					return (0);
+				}
+				free(str_next);
 				str_next = get_next_line(fd);
 				continue ;
 			}
+			free(str1);
+			free(str_next);
 			return (0);
 		}
 		if (!check_walls(str_next))
+		{
+			free(str1);
+			free(str_next);
 			return (0);
+		}
+		free(str_next);
 		str_next = get_next_line(fd);
 	}
+	free(str1);
+	free(str_next);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:51:23 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/03 12:42:25 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:47:29 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int				count_size(char *file, t_game_map *my_map);
 char			*ft_strcpy(char *dst, char *src);
 char			**copy_map(t_game_map *my_map);
 void			set_ij(int *i, int *j);
+void 			free_map(char **map_check);
 
 #endif

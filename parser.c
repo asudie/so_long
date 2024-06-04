@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:30 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/03 16:50:45 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:53:00 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	get_data(char *file, t_data *data)
 
 	fd = open(file, O_RDONLY);
 	data->map->map_data = malloc(sizeof(char **) * data->map->map_height);
+	if(!data->map->map_data)
+	{
+		free_map(data->map->map_data);
+		return;
+	}
 	i = 0;
 	data->map->map_data[i] = get_next_line(fd);
 	while (i < data->map->map_height - 1)
@@ -70,17 +75,19 @@ int	parse_map(char *file, t_data *data)
 	{
 		get_data(file, data);
 		map_check = copy_map(data->map);
-		if (!check_items(data->map))
+		if (!check_items(data->map)) // invalid read
 		{
 			write(2, "Error\n", 6);
 			free_map(map_check);
+			free_map(data->map->map_data);
 			return (0);
 		}
 		if (!check_paths(data->map->player_position[0],
-				data->map->player_position[1], map_check, data))
+				data->map->player_position[1], map_check, data)) // invalid read
 		{
 			write(2, "Error\n", 6);
 			free_map(map_check);
+			free_map(data->map->map_data);
 			return (0);
 		}
 		data->map->game_over = 0;
