@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:30 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/04 13:53:00 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:26:47 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	check_paths(int pos_x, int pos_y, char **map_check, t_data *data)
 		return (0);
 	if (map_check[pos_x][pos_y] == 'C')
 		data->map->collectables++;
-	if (map_check[pos_x][pos_y] == 'E')
+	if (map_check[pos_x][pos_y] == 'E' && data->map->collectables == data->map->max_score)
 		data->map->exits++;
+	else
+		return(0);
 	map_check[pos_x][pos_y] = '1';
 	if (check_paths(pos_x + 1, pos_y, map_check, data) || check_paths(pos_x
 			- 1, pos_y, map_check, data) || check_paths(pos_x, pos_y + 1,
