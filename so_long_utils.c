@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:22:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/05/31 11:25:49 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:37:20 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ void	print_map(t_data *data)
 		while (j < data->map->map_length)
 		{
 			write(1, &data->map->map_data[i][j], 1);
+			j++;
+		}
+		write(1, "\n", 1);
+		i++;
+	}
+}
+
+void	print_check(char **map_data, int map_length, int map_height)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map_height)
+	{
+		j = 0;
+		while (j < map_length)
+		{
+			write(1, &map_data[i][j], 1);
 			j++;
 		}
 		write(1, "\n", 1);

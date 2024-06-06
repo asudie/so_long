@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:20:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/03 14:30:03 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:43:35 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ int	main(int argc, char **argv)
 				data);
 			mlx_loop(data->mlx_ptr);
 		}
+	} else
+	{
+		write(2, "Error\nNot enough args\n", 22);
 	}
 	free(data->map);
 	free(data);

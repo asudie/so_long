@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:02 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/04 13:48:28 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:13:36 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ int	first_check(char *str)
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{
-		write(2, "Error\n", 6);
+		write(2, "Error\nCan't opem the file\n", 26);
 		return (0);
 	}
 	if (!check_ber(str) || !check_str(fd))
 	{
-		write(2, "Error\n", 6);
+		write(2, "Error\nFile is not .ber or map is not ractangle\n", 47);
 		return (0);
 	}
 	close(fd);
