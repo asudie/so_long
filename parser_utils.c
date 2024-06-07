@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:53:32 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/04 12:29:29 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:04:31 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	count_size(char *file, t_game_map *my_map)
 	}
 	free(temp_str);
 	close(fd);
+	if(my_map->map_height > 31 || my_map->map_length > 40)
+	{
+		res = 0;
+		write(2, "Error\nMap is too big!\n", 22);
+	}
 	return (res);
 }
 
@@ -67,6 +72,8 @@ char	**copy_map(t_game_map *my_map)
 
 	i = 0;
 	map_check = malloc((sizeof(char *) * (my_map->map_height + 1)));
+	if(!map_check)
+		return (NULL);
 	while (i < my_map->map_height)
 	{
 		map_check[i] = ft_strcpy(map_check[i], my_map->map_data[i]);

@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:20:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/05 20:43:35 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:07:35 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	main(int argc, char **argv)
 	(void)argc;
 	data = malloc(sizeof(t_data));
 	data->map = malloc(sizeof(t_game_map));
+	if(!data || !data->map)
+		return (0);
 	data->map->collectables = 0;
 	data->map->exits = 0;
 	if(argv[1])

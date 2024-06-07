@@ -6,12 +6,15 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:51:23 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/06 17:37:53 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:38:49 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
+
+//delete
+#include <string.h> 
 
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
