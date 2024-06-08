@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:35:02 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/07 21:48:38 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:01:43 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,19 @@ int	check_items(t_game_map *my_map)
 	int	c;
 	int	pe;
 
-	c = 0;
-	pe = 0;
-	if (!loop_func(my_map, &c, &pe, 0))
-		return (0);
-	if (pe == 2 && c >= 1)
+	if(my_map->map_data[my_map->map_height - 1][my_map->map_length] == '\0')
 	{
-		my_map->max_score = c;
-		return (1);
+		c = 0;
+		pe = 0;
+		if (!loop_func(my_map, &c, &pe, 0))
+			return (0);
+		if (pe == 2 && c >= 1)
+		{
+			my_map->max_score = c;
+			return (1);
+		}
 	}
+	
 	return (0);
 }
 

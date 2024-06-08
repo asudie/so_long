@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:39:07 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/07 21:41:56 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/08 10:50:06 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,5 @@ int	check_walls(char *str)
 void	set_ij(int *i, int *j)
 {
 	*j = 0;
-	// printf("i = %i", *i);
 	(*i)++;
 }
