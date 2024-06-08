@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:22:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/06 17:37:20 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:46:10 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,10 @@ void	find_exit(t_data *data)
 		}
 		i++;
 	}
+}
+
+void	init_values(int *i, int *res)
+{
+	*i = 0;
+	*res = 0;
 }

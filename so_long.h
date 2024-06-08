@@ -6,24 +6,21 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:51:23 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/07 21:38:49 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:45:21 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-//delete
-#include <string.h> 
-
 # include "gnl/get_next_line.h"
 # include "libft/libft.h"
+# include "my_printf/ft_printf.h"
 # include <X11/Xlib.h>
 # include <X11/Xutil.h>
 # include <fcntl.h>
 # include <mlx.h>
 # include <stdlib.h>
-# include "my_printf/ft_printf.h"
 
 typedef struct s_game_map
 {
@@ -71,7 +68,9 @@ int				count_size(char *file, t_game_map *my_map);
 char			*ft_strcpy(char *dst, char *src);
 char			**copy_map(t_game_map *my_map);
 void			set_ij(int *i, int *j);
-void 			free_map(char **map_check, int size);
+void			free_map(char **map_check, int size);
 void			print_check(char **map_data, int map_length, int map_height);
+int				mesg_and_free(char *message, char **map_check, t_data *data);
+void			init_values(int *i, int *res);
 
 #endif
