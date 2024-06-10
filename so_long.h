@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:51:23 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/08 13:45:21 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:57:07 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ void			free_map(char **map_check, int size);
 void			print_check(char **map_data, int map_length, int map_height);
 int				mesg_and_free(char *message, char **map_check, t_data *data);
 void			init_values(int *i, int *res);
+void			data_start(t_data *data);
+int				data_init(t_data **data);
 
 #endif

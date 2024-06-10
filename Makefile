@@ -16,7 +16,7 @@ else
  MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
-SRCS = so_long.c so_long_utils.c keys_work.c validate_map.c validate_utils.c parser.c parser_utils.c gnl/get_next_line.c gnl/get_next_line_utils.c my_printf/ft_printf.c my_printf/utils.c
+SRCS = so_long.c so_long_utils.c utils.c keys_work.c validate_map.c validate_utils.c parser.c parser_utils.c gnl/get_next_line.c gnl/get_next_line_utils.c my_printf/ft_printf.c my_printf/utils.c
 OBJS = $(SRCS:.c=.o)
  
 all: $(MLX_LIB) $(NAME)

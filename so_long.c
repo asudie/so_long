@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:20:24 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/08 15:43:23 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:56:45 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,6 @@ void	draw_map(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->textures[6]);
 }
 
-int	data_init(t_data **data)
-{
-	*data = malloc(sizeof(t_data));
-	if (!*data)
-		return (0);
-	(*data)->map = malloc(sizeof(t_game_map));
-	if (!(*data)->map)
-		return (0);
-	(*data)->map->collectables = 0;
-	(*data)->map->exits = 0;
-	return (1);
-}
-
-void	data_start(t_data *data)
-{
-	draw_map(data);
-	mlx_key_hook(data->win_ptr, on_keypress, data);
-	mlx_hook(data->win_ptr, DestroyNotify, StructureNotifyMask, on_destroy,
-		data);
-	mlx_loop(data->mlx_ptr);
-}
-
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -118,10 +96,6 @@ int	main(int argc, char **argv)
 			file = argv[1];
 			if (first_check(file) && parse_map(file, data))
 			{
-				data->mlx_ptr = mlx_init();
-				data->win_ptr = mlx_new_window(data->mlx_ptr, 65
-						* data->map->map_length, 65 * data->map->map_height,
-						"Help Bibi find the rocket");
 				data_start(data);
 			}
 		}
