@@ -6,63 +6,26 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:39:07 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/08 10:50:06 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:54:51 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_ber(char *str)
+int	check_lengths(int fd, char **str1)
 {
-	if (ft_strncmp((str + ft_strlen(str) - 4), ".ber", 4))
+	if (!check_first_line(fd, str1))
 		return (0);
-	return (1);
+	return (check_subsequent_lines(fd, *str1));
 }
 
 int	check_str(int fd)
 {
 	char	*str1;
-	char	*str_next;
 
-	str1 = get_next_line(fd);
-	if (!check_one(str1))
-	{
-		free(str1);
+	if (!check_lengths(fd, &str1))
 		return (0);
-	}
-	str_next = get_next_line(fd);
-	while (str_next != NULL)
-	{
-		if (ft_strlen(str1) != ft_strlen(str_next))
-		{
-			if (str_next[ft_strlen(str_next) - 1] != '\n')
-			{
-				if (!check_one(str_next))
-				{
-					free(str1);
-					free(str_next);
-					return (0);
-				}
-				free(str_next);
-				str_next = get_next_line(fd);
-				continue ;
-			}
-			free(str1);
-			free(str_next);
-			return (0);
-		}
-		if (!check_walls(str_next))
-		{
-			free(str1);
-			free(str_next);
-			return (0);
-		}
-		free(str_next);
-		str_next = get_next_line(fd);
-	}
-	free(str1);
-	free(str_next);
-	return (1);
+	return (check_walls_and_cleanup(fd, str1));
 }
 
 int	nl_strlen(char *s)

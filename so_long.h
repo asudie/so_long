@@ -6,7 +6,7 @@
 /*   By: asmolnya <asmolnya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:51:23 by asmolnya          #+#    #+#             */
-/*   Updated: 2024/06/10 13:57:07 by asmolnya         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:53:33 by asmolnya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,10 @@ int				mesg_and_free(char *message, char **map_check, t_data *data);
 void			init_values(int *i, int *res);
 void			data_start(t_data *data);
 int				data_init(t_data **data);
+int				check_walls_and_cleanup(int fd, char *str1);
+void			free_mem(char *str1, char *str_next);
+int				check_first_line(int fd, char **str1);
+int				check_subsequent_lines(int fd, char *str1);
+void			change_pos(t_game_map *my_map, int i, int j, int *pe);
 
 #endif
